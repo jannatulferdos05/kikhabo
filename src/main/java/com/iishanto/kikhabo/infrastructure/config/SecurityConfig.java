@@ -53,11 +53,11 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req->{
                     req.requestMatchers("/api/v1/user/login","/api/v1/user/register","/api/v1/user/social-login").permitAll();
-                    req.requestMatchers("/api/v1/admin/**").permitAll(); // guarded by ApiKeyAuthFilter
+                    req.requestMatchers("/api/v1/admin/**").authenticated(); // guarded by ApiKeyAuthFilter
                     req.requestMatchers("/swagger-ui.html").permitAll();
                     req.requestMatchers("/swagger-ui/**").permitAll();
                     req.requestMatchers("/v3/api-docs/**").permitAll();
-                    req.requestMatchers("/admin/**").permitAll();
+                    req.requestMatchers("/admin/**").authenticated();
                     req.anyRequest().authenticated();
                 })
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
